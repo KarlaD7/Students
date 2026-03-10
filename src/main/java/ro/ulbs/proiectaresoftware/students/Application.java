@@ -1,12 +1,12 @@
 package ro.ulbs.proiectaresoftware.students;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Application {
     public static void main(String[] args) {
-
-        // a) Crearea unei liste din lista de instante Student
         List<Student> listaStudenti = new ArrayList<>();
 
         listaStudenti.add(new Student(112, "Ioan", "Popa", "TI21/1"));
@@ -15,29 +15,17 @@ public class Application {
         listaStudenti.add(new Student(122, "Mihai", "Vecerdea", "TI22/1"));
         listaStudenti.add(new Student(122, "Eugen", "Uritescu", "TI22/2"));
 
-        System.out.println("lista de studenti");
-        for (Student s : listaStudenti) {
-            System.out.println(s);
-        }
-
-        // b) si c) Verificarea prezentei studentilor
-        Student sCautantB = new Student(120, "Alis", "Popa", "TI21/2");
-        Student sCautantC = new Student(112, "Maria", "Popa", "TI21/1");
-
-        System.out.println("\nRezultate verificare:");
-        System.out.println("Studentul Alis Popa (b) este prezent? " + existaStudent(listaStudenti, sCautantB));
-        System.out.println("Studentul Maria Popa (c) este prezent? " + existaStudent(listaStudenti, sCautantC));
-    }
+        // tema 2.5.3
 
 
-    public static boolean existaStudent(List<Student> lista, Student s) {
-        for (Student studentDinLista : lista) {
-            if (studentDinLista.getPrenume().equals(s.getPrenume()) &&
-                    studentDinLista.getNume().equals(s.getNume()) &&
-                    studentDinLista.getFormatieDeStudiu().equals(s.getFormatieDeStudiu())) {
-                return true;
-            }
-        }
-        return false;
+        Set<Student> setStudenti = new HashSet<>(listaStudenti);
+
+
+        Student s1 = new Student(120, "Alis", "Popa", "TI21/2");
+        Student s2 = new Student(112, "Maria", "Popa", "TI21/1");
+
+
+        System.out.println("Studentul Alis Popa este prezent? " + setStudenti.contains(s1));
+        System.out.println("Studentul Maria Popa este prezent? " + setStudenti.contains(s2));
     }
 }
