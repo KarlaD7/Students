@@ -28,7 +28,8 @@ public class Application {
                 listaStudenti.add(s);
             }
 
-            Collections.sort(listaStudenti, Comparator.comparing(Student::getNume));
+            Collections.sort(listaStudenti, Comparator.comparing(Student::getFormatieDeStudiu)
+                    .thenComparing(Student::getNume));
 
             List<String> liniiDeIesire = new ArrayList<>();
             System.out.println("Studentii sortati dupa nume:");
@@ -42,6 +43,8 @@ public class Application {
             Path pathOut = Paths.get("studenti_out.txt");
             Files.write(pathOut, liniiDeIesire);
             System.out.println("\n studenti_out.txt");
+            Path pathOutSorted = Paths.get("studenti_out_sorted.txt");
+            Files.write(pathOutSorted, liniiDeIesire);
         }
         catch (IOException e){
             System.out.println("Eroare");
