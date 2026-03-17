@@ -1,31 +1,52 @@
 package ro.ulbs.proiectaresoftware.students;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class Application {
     public static void main(String[] args) {
-        List<Student> listaStudenti = new ArrayList<>();
+        try {
+            Path pathIn = Paths.get("studenti_in.txt");
+            List<String> linii = Files.readAllLines(pathIn);
 
-        listaStudenti.add(new Student(112, "Ioan", "Popa", "TI21/1"));
-        listaStudenti.add(new Student(112, "Maria", "Oprea", "TI21/1"));
-        listaStudenti.add(new Student(120, "Alis", "Popa", "TI21/2"));
-        listaStudenti.add(new Student(122, "Mihai", "Vecerdea", "TI22/1"));
-        listaStudenti.add(new Student(122, "Eugen", "Uritescu", "TI22/2"));
+            List<Student> listaStudenti = new ArrayList<>();
 
-        // tema 2.5.3
+            for (String linie : linii) {
+                if (linie.trim().isEmpty()) continue;
 
+                String[] date = linie.split(",");
 
-        Set<Student> setStudenti = new HashSet<>(listaStudenti);
+                Student s = new Student(
+                        Integer.parseInt(date[0].trim()),
+                        date[1].trim(),
+                        date[2].trim(),
+                        date[3].trim()
+                );
+                listaStudenti.add(s);
+            }
 
+            Collections.sort(listaStudenti, Comparator.comparing(Student::getNume));
 
-        Student s1 = new Student(120, "Alis", "Popa", "TI21/2");
-        Student s2 = new Student(112, "Maria", "Popa", "TI21/1");
+            List<String> liniiDeIesire = new ArrayList<>();
+            System.out.println("Studentii sortati dupa nume:");
 
+            for (Student s : listaStudenti) {
+                String studentString = s.toString();
+                System.out.println(studentString);
+                liniiDeIesire.add(studentString);
+            }
 
-        System.out.println("Studentul Alis Popa este prezent? " + setStudenti.contains(s1));
-        System.out.println("Studentul Maria Popa este prezent? " + setStudenti.contains(s2));
+            Path pathOut = Paths.get("studenti_out.txt");
+            Files.write(pathOut, liniiDeIesire);
+            System.out.println("\n studenti_out.txt");
+        }
+        catch (IOException e){
+            System.out.println("Eroare");
+            e.printStackTrace();
+        }
+
     }
 }
