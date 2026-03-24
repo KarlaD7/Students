@@ -39,6 +39,7 @@ public class Student {
     public String getPrenume() { return prenume; }
     public String getNume() { return nume; }
     public String getFormatieDeStudiu() { return formatieDeStudiu; }
+    public double getNota() { return nota;}
 
     @Override
     public String toString() {

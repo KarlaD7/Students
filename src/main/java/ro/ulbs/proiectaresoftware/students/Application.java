@@ -7,6 +7,15 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class Application {
+
+    public static float gasesteNota(String prenume, String nume, Map<String, Student> mapStudenti) {
+
+        String cheie = prenume + " " + nume;
+        Student s = mapStudenti.get(cheie);
+
+        return (s != null) ? (float) s.getNota() : 0.0f;
+    }
+
     public static void main(String[] args) {
         try {
             Path pathIn = Paths.get("studenti_in.txt");
@@ -46,6 +55,18 @@ public class Application {
                     }
                 }
             }
+            Map<String, Student> tineri = new HashMap<>();
+            for (Student s : listaStudenti) {
+                tineri.put(s.getPrenume() + " " + s.getNume(), s);
+            }
+
+            float notaM = gasesteNota("Bianca", "Popescu", tineri);
+            float notaN = gasesteNota("Ioan", "Popa", tineri);
+
+            System.out.println("Nota pentru Bianca Popescu: " + notaM);
+            System.out.println("Nota pentru Ioan Popa: " + notaN);
+
+
             Collections.sort(listaStudenti, Comparator.comparing(Student::getFormatieDeStudiu)
                     .thenComparing(Student::getNume));
 
