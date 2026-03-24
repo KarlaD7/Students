@@ -73,7 +73,6 @@ public class Application {
             List<String> liniiDeIesire = new ArrayList<>();
             System.out.println("Studentii actualizati cu note (Sortati):");
 
-
             for (Student s : listaStudenti) {
                 String studentString = s.toString();
                 System.out.println(studentString);
