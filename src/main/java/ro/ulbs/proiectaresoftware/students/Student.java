@@ -1,3 +1,4 @@
+
 package ro.ulbs.proiectaresoftware.students;
 
 import java.util.Objects;
@@ -7,6 +8,7 @@ public class Student {
     private String prenume;
     private String nume;
     private String formatieDeStudiu;
+    private double nota;
 
     public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
         this.numarMatricol = numarMatricol;
@@ -15,21 +17,22 @@ public class Student {
         this.formatieDeStudiu = formatieDeStudiu;
     }
 
-    //Metoda equals
+
+    public void setNota(double nota) {
+        this.nota = nota;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return Objects.equals(prenume, student.prenume) &&
-                Objects.equals(nume, student.nume) &&
-                Objects.equals(formatieDeStudiu, student.formatieDeStudiu);
+        return numarMatricol == student.numarMatricol;
     }
 
-    //Metoda hashCode
     @Override
     public int hashCode() {
-        return Objects.hash(prenume, nume, formatieDeStudiu);
+        return Objects.hash(numarMatricol);
     }
 
     public int getNumarMatricol() { return numarMatricol; }
@@ -39,6 +42,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return String.format("%15d %15s %15s %15s", numarMatricol, prenume, nume, formatieDeStudiu);
+        return String.format("%10d %15s %15s %15s %10.2f",
+                numarMatricol, prenume, nume, formatieDeStudiu, nota);
     }
 }

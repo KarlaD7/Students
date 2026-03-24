@@ -14,6 +14,8 @@ public class Application {
 
             List<Student> listaStudenti = new ArrayList<>();
 
+            Map<Integer, Student> studentMap = new HashMap<>();
+
             for (String linie : linii) {
                 if (linie.trim().isEmpty()) continue;
 
@@ -26,13 +28,30 @@ public class Application {
                         date[3].trim()
                 );
                 listaStudenti.add(s);
+                studentMap.put(s.getNumarMatricol(), s);
             }
+            Path pathNote = Paths.get("note_anon.txt");
+            if (Files.exists(pathNote)) {
+                List<String> liniiNote = Files.readAllLines(pathNote);
+                for (String linie : liniiNote) {
+                    if (linie.trim().isEmpty()) continue;
+                    String[] dateNota = linie.split(",");
 
+                    int matricol = Integer.parseInt(dateNota[0].trim());
+                    double valoareNota = Double.parseDouble(dateNota[1].trim());
+
+                    Student s = studentMap.get(matricol);
+                    if (s != null) {
+                        s.setNota(valoareNota);
+                    }
+                }
+            }
             Collections.sort(listaStudenti, Comparator.comparing(Student::getFormatieDeStudiu)
                     .thenComparing(Student::getNume));
 
             List<String> liniiDeIesire = new ArrayList<>();
-            System.out.println("Studentii sortati dupa nume:");
+            System.out.println("Studentii actualizati cu note (Sortati):");
+
 
             for (Student s : listaStudenti) {
                 String studentString = s.toString();
@@ -50,6 +69,9 @@ public class Application {
             System.out.println("Eroare");
             e.printStackTrace();
         }
-
+        catch (NumberFormatException e) {
+            System.out.println("Eroare la formatul datelor ");
+            e.printStackTrace();
+        }
     }
 }
