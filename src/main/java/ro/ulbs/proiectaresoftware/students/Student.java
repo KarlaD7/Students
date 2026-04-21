@@ -1,26 +1,21 @@
-
 package ro.ulbs.proiectaresoftware.students;
 
 import java.util.Objects;
 
 public class Student {
-    private int numarMatricol;
-    private String prenume;
-    private String nume;
-    private String formatieDeStudiu;
-    private double nota;
-
-    public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu) {
+    private final int numarMatricol;
+    private final String prenume;
+    private final String nume;
+    private final String formatieDeStudiu;
+    private final double nota;
+    public Student(int numarMatricol, String prenume, String nume, String formatieDeStudiu, double nota) {
         this.numarMatricol = numarMatricol;
         this.prenume = prenume;
         this.nume = nume;
         this.formatieDeStudiu = formatieDeStudiu;
-    }
-
-
-    public void setNota(double nota) {
         this.nota = nota;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -39,7 +34,7 @@ public class Student {
     public String getPrenume() { return prenume; }
     public String getNume() { return nume; }
     public String getFormatieDeStudiu() { return formatieDeStudiu; }
-    public double getNota() { return nota;}
+    public double getNota() { return nota; }
 
     @Override
     public String toString() {

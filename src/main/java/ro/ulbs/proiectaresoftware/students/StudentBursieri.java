@@ -1,12 +1,11 @@
 package ro.ulbs.proiectaresoftware.students;
 
-public class StudentBursieri extends Student{
+public class StudentBursieri extends Student {
     private double cuantumBursa;
 
-    public StudentBursieri(int id, String nume, String prenume, String grupa, double medie, double cuantumBursa){
-        super(id, nume, prenume, grupa);
-        setNota(medie);
-        this.cuantumBursa=cuantumBursa;
+    public StudentBursieri(int id, String nume, String prenume, String grupa, double medie, double cuantumBursa) {
+        super(id, nume, prenume, grupa, medie);
+        this.cuantumBursa = cuantumBursa;
     }
 
     @Override
