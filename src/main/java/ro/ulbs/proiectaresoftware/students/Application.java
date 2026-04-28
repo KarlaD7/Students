@@ -1,5 +1,11 @@
 package ro.ulbs.proiectaresoftware.students;
 
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,6 +43,54 @@ public class Application {
             }
         }
         return rezultat;
+    }
+
+    // 8.5.4 a)
+    public static void writeToXls(Set<Student> studenti, String fileName) {
+        try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+            XSSFSheet sheet = workbook.createSheet("Studenti");
+            int rowNum = 0;
+
+            for (Student st : studenti) {
+                Row row = sheet.createRow(rowNum++);
+                // Scriem datele in coloane: Matricol, Prenume, Nume, Formatie, Nota [cite: 41-45, 131]
+                row.createCell(0).setCellValue(st.getNumarMatricol());
+                row.createCell(1).setCellValue(st.getPrenume());
+                row.createCell(2).setCellValue(st.getNume());
+                row.createCell(3).setCellValue(st.getFormatieDeStudiu());
+                row.createCell(4).setCellValue(st.getNota());
+            }
+
+            try (FileOutputStream out = new FileOutputStream(fileName)) {
+                workbook.write(out);
+            }
+            System.out.println("\n[Laborator 8] Fisierul " + fileName + " a fost exportat.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // 8.5.4 b)
+    public static List<Student> readFromXls(String fileName) {
+        List<Student> listaStudenti = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream(fileName);
+             XSSFWorkbook workbook = new XSSFWorkbook(fis)) {
+
+            Sheet sheet = workbook.getSheetAt(0);
+            for (Row row : sheet) {
+                Student s = new Student(
+                        (int) row.getCell(0).getNumericCellValue(),
+                        row.getCell(1).getStringCellValue(),
+                        row.getCell(2).getStringCellValue(),
+                        row.getCell(3).getStringCellValue(),
+                        row.getCell(4).getNumericCellValue()
+                );
+                listaStudenti.add(s);
+            }
+        } catch (IOException e) {
+            System.out.println("Eroare la citirea din Excel.");
+        }
+        return listaStudenti;
     }
 
     public static void main(String[] args) {
@@ -121,6 +175,18 @@ public class Application {
             System.out.println("\nStudentii impartiti in doua formatii:");
             for (Student s : setStudenti) {
                 System.out.println(s);
+            }
+
+            String xlsFileName = "laborator8_students.xlsx";
+
+            // a)
+            writeToXls(setStudenti, xlsFileName);
+
+            // b)
+            List<Student> studentsFromXls = readFromXls(xlsFileName);
+            System.out.println("\n[Laborator 8] Studenti cititi din xlsx:");
+            for (Student st : studentsFromXls) {
+                System.out.println(st);
             }
 
         } catch (IOException e) {
