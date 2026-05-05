@@ -196,5 +196,49 @@ public class Application {
             System.out.println("Eroare la formatul datelor");
             e.printStackTrace();
         }
+
+        System.out.println("Studenti:");
+        List<Student> studentiCuNote = Arrays.asList(
+                new Student(1025,"Andrei","Popa","ISM141/2", 8.70),
+                new Student(1024,"Ioan","Mihalcea","ISM141/1", 10),
+                new Student(1026,"Anamaria","Prodan","TI131/1", 8.90),
+                new Student(1029,"Bianca","Popescu","TI131/1,", 10),
+                new Student(1029,"Maria","Pana","TI131/2,", 4.10),
+                new Student(1029,"Gabriela","Mohanu","TI131/2,", 7.33),
+                new Student(1029,"Marius","Nasta","TI131/2,", 3.20),
+                new Student(1029,"Marius","Nasta","TI131/1,", 5.12),
+                new Student(1029,"Andrei","Dobrescu","TI131/2,", 2.22)
+        );
+
+        // a) Studenții cu nota 10
+        System.out.println("\na) Studenti cu nota 10:");
+        studentiCuNote.stream()
+                .filter(s -> s.getNota() == 10)
+                .forEach(System.out::println);
+
+        //b)Studenti cu nota sub 5
+        System.out.println("\nb) Studenti cu nota sub 5:");
+        studentiCuNote.stream()
+                .filter(student -> student.getNota()<=5)
+                .forEach(System.out::println);
+
+        //c)Transformati lista de studenți într-o listă în care studentii cu nota < 4 devin studenti cu nota 4 (map).
+        List<Student> studentiModificati = studentiCuNote.stream()
+                .map(s -> s.getNota() < 4
+                        ? new Student(s.getNumarMatricol(), s.getPrenume(), s.getNume(), s.getFormatieDeStudiu(), 4.0)
+                        : s)
+                .collect(java.util.stream.Collectors.toList());
+        System.out.println("\nc) Lista dupa mapare (nota minima 4):");
+        studentiModificati.forEach(System.out::println);
+
+        //d) Suma notelor
+        double sumaNote = studentiCuNote.stream()
+                .map(Student::getNota)
+                .reduce(0.0, Double::sum);
+        System.out.println("\nd) Suma notelor: " + sumaNote);
+
+        // e) Media notelor
+        double media = sumaNote / studentiCuNote.size();
+        System.out.println("e) Media notelor: " + String.format("%.2f", media));
     }
 }
