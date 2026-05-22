@@ -1,11 +1,15 @@
 package ro.ulbs.proiectaresoftware.students;
 
-public class StudentBursieri extends Student {
+public class StudentBursier extends Student {
     private double cuantumBursa;
 
-    public StudentBursieri(int id, String nume, String prenume, String grupa, double medie, double cuantumBursa) {
+    public StudentBursier(int id, String nume, String prenume, String grupa, double medie, double cuantumBursa) {
         super(id, nume, prenume, grupa, medie);
         this.cuantumBursa = cuantumBursa;
+    }
+
+    public double getCuantumBursa() {
+        return cuantumBursa;
     }
 
     @Override
@@ -13,7 +17,7 @@ public class StudentBursieri extends Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        StudentBursieri that = (StudentBursieri) o;
+        StudentBursier that = (StudentBursier) o;
         return Double.compare(that.cuantumBursa, cuantumBursa) == 0;
     }
 
